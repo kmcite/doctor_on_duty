@@ -1,0 +1,75 @@
+name: doctor_on_duty
+
+description: new app
+publish_to: "none"
+version: 2.0.0+1
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  path_provider: ^2.1.0  
+  uuid: ^4.4.0
+  file_picker: any
+  material_design_icons_flutter: any
+  font_awesome_flutter: ^10.7.0
+  colornames:
+  intl:
+  english_words: any
+  google_fonts: ^6.2.1
+  states_rebuilder: ^6.4.0
+  manager:
+    path: ..//manager
+  package_info_plus: ^8.0.0
+  forui: ^0.9.0
+  flutter_launcher_icons: ^0.14.2
+  permission_handler: ^11.3.1
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Operator Mono
+      fonts:
+        - asset: assets/operator.otf
+    - family: Lotion
+      fonts:
+        - asset: assets/Lotion-Black.ttf
+        - asset: assets/Lotion-BlackItalic.ttf
+          style: italic
+        - asset: assets/Lotion-Bold.ttf
+        - asset: assets/Lotion-BoldItalic.ttf
+          style: italic
+        - asset: assets/Lotion-Regular.ttf
+        - asset: assets/Lotion-RegularItalic.ttf
+          style: italic
+        - asset: assets/Lotion-SemiBold.ttf
+        - asset: assets/Lotion-SemiBoldItalic.ttf
+          style: italic
+
+  assets:
+    - assets/
+    - assets/fonts/
+
+flutter_native_splash:
+  image: "assets/book.png"
+  color: "#000000"
+  background_image: "assets/default.png"
+flutter_launcher_icons:
+  android: "launcher_icon"
+  # ios: true
+  image_path: "assets/book.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/book.png"
+    # background_color: "#hexcode"
+    # theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/book.png"
+    icon_size: 72 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/book.png"
+# dart run flutter_native_splash:create
+# dart run flutter_launcher_icons
