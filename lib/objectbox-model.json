@@ -1,0 +1,135 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "3:4383818526270876764",
+      "lastPropertyId": "7:4207371744317413248",
+      "name": "Chapter",
+      "properties": [
+        {
+          "id": "1:5518577314970806738",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "2:7660010977672959829",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "3:523200553603179236",
+          "name": "author",
+          "type": 9
+        },
+        {
+          "id": "4:5363893780885535457",
+          "name": "pageCount",
+          "type": 9
+        },
+        {
+          "id": "5:8696121154898089343",
+          "name": "publishedOn",
+          "type": 10
+        },
+        {
+          "id": "6:4373151093888246067",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:1117586691515035700",
+      "lastPropertyId": "9:5622812754006024188",
+      "name": "Case",
+      "properties": [
+        {
+          "id": "1:4649990386763301367",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3666040583353505192",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3759570260891358219",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:7953515564680845490",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "5:7188064329835286718",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "6:659382249932108262",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "7:9154034605967792484",
+          "name": "definition",
+          "type": 9
+        },
+        {
+          "id": "8:8050736818740290059",
+          "name": "epidemiology",
+          "type": 9
+        },
+        {
+          "id": "9:5622812754006024188",
+          "name": "chapterId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:8317602717452753499",
+          "relationTarget": "Chapter"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:1117586691515035700",
+  "lastIndexId": "2:8317602717452753499",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    5567240294230845996,
+    1939886503755699563
+  ],
+  "retiredIndexUids": [
+    1391464922779441018
+  ],
+  "retiredPropertyUids": [
+    6700941335735336355,
+    7549490085178677469,
+    5712909319424014052,
+    5514647075306842425,
+    1194860839630142529,
+    766353026504380051,
+    4207371744317413248,
+    3526203191345179863,
+    9181011755904302333,
+    8105280096002770456,
+    8383406488946328381,
+    2668916382782194363,
+    6422781266664776396,
+    644857222747613720,
+    5190345126118948997
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
