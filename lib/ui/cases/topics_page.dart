@@ -1,6 +1,6 @@
 // ignore_for_file: unused_field
 
-import 'package:doctor_on_duty/domain/api/chapters_api.dart';
+import 'package:doctor_on_duty/domain/api/chapters_repository.dart';
 import 'package:doctor_on_duty/domain/api/topics_repository.dart';
 import 'package:doctor_on_duty/ui/cases/add_topic_dialog.dart';
 import 'package:doctor_on_duty/ui/cases/edit_topic_page.dart';
@@ -8,51 +8,56 @@ import 'package:doctor_on_duty/ui/cases/view_topic_page.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/ui/settings.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
-
 import 'package:doctor_on_duty/domain/models/chapter.dart';
+import 'package:doctor_on_duty/domain/models/topic.dart';
 
-import '../../domain/models/topic.dart';
+class TopicsPage extends StatefulWidget {
+  @override
+  State<TopicsPage> createState() => _TopicsPageState();
+}
 
-mixin class TopicsBloc {
-  final chapter = RM.inject<Chapter?>(() => null);
-  final topics = RM.injectStream(topicsRepository.watchAll);
-  final chapters = RM.injectStream(chaptersRepository.watchAll);
-  bool get loading => chapters.isWaiting || topics.isWaiting;
-  Topic? byId(int id) => topics.state.where(
-        (test) {
-          return test.id == id;
-        },
-      ).firstOrNull;
+class _TopicsPageState extends State<TopicsPage> {
+  late TopicsRepository topicsRepository = watch();
+  late ChaptersRepository chaptersRepository = watch();
+
+  Chapter? chapter;
+
+  Iterable<Topic> get topics => topicsRepository.getAll();
+  Iterable<Chapter> get chapters => chaptersRepository.getAll();
+
+  bool loading = false;
+  Topic? byId(int id) => topicsRepository.get(id);
 
   void chapterSelected(Chapter value) {
-    if (chapter.state?.id == value.id) {
-      chapter.state = (null);
+    if (chapter?.id == value.id) {
+      chapter = null;
     } else {
-      chapter.state = (value);
+      chapter = value;
     }
+    rebuild();
   }
 
   Iterable<Topic> get filteredTopics {
-    if (chapter.state?.id == null) {
-      return topics.state;
+    if (chapter?.id == null) {
+      return topics;
     } else {
-      return topics.state.where(
+      return topics.where(
         (topic) {
-          return topic.id == chapter.state?.id;
+          return topic.id == chapter?.id;
         },
       );
     }
   }
 
-  Modifier<Topic> get view => throw topicsRepository;
+  Topic topic([Topic? v]) => throw topicsRepository;
   void viewTopic(Topic topic) {
     // topicsRepository.viewRM.state = topic.id;
     // to(ViewTopicPage());
-    view(topic);
+    // view(topic);
     navigator.to(ViewTopicPage());
   }
 
-  Modifier<Topic> get edit => throw topicsRepository;
+  Topic edit([Topic? v]) => throw topicsRepository;
   void editTopic(Topic topic) {
     edit(topic);
     // topicsRepository.editRM.state = topic.id;
@@ -60,57 +65,55 @@ mixin class TopicsBloc {
   }
 
   void emit(copyWith) {}
-}
 
-class TopicsPage extends UI with TopicsBloc {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
         title: Text('Topics'),
-        prefixActions: [
+        prefixes: [
           FHeaderAction(
-            icon: FIcon(FAssets.icons.captions),
+            icon: Icon(FIcons.captions),
             // 1 navigation
             onPress: () {
               navigator.to(ChaptersPage());
             },
           ),
           FHeaderAction(
-            icon: FIcon(FAssets.icons.settings),
+            icon: Icon(FIcons.settings),
             // 2 navigation
             onPress: () {
               navigator.to(SettingsPage());
             },
           ),
         ],
-        suffixActions: [
+        suffixes: [
           FButton.icon(
             onPress: () {},
-            child: FIcon(FAssets.icons.refreshCw),
+            child: Icon(FIcons.refreshCw),
           ),
           FButton.icon(
             onPress: () {
               navigator.dialog(AddTopicDialog());
             },
-            child: FIcon(FAssets.icons.plus),
+            child: Icon(FIcons.plus),
           ),
         ],
       ),
-      content: loading
+      child: loading
           ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: chapters.state.map((chapter) {
+                    children: chapters.map((chapter) {
                       return FTappable(
                         child: FBadge(
-                          label: chapter.name.text(),
+                          child: chapter.name.text(),
                           style: switch (chapter.id == chapter.id) {
-                            true => FBadgeStyle.primary,
-                            _ => FBadgeStyle.secondary,
+                            true => FBadgeStyle.primary(),
+                            _ => FBadgeStyle.secondary(),
                           },
                         ).pad(),
                         onPress: () => chapterSelected(chapter),
@@ -121,9 +124,9 @@ class TopicsPage extends UI with TopicsBloc {
                 Expanded(
                   child: ListView.builder(
                     // divider: FTileDivider.full,
-                    itemCount: topics.state.length,
+                    itemCount: topics.length,
                     itemBuilder: (context, index) {
-                      final topic = topics.state.elementAt(index);
+                      final topic = topics.elementAt(index);
                       return FTile(
                         title: topic.name.text(),
                         subtitle: Column(
@@ -136,11 +139,11 @@ class TopicsPage extends UI with TopicsBloc {
                           viewTopic(topic);
                         },
                         details: FButton.icon(
-                          style: FButtonStyle.primary,
+                          style: FButtonStyle.primary(),
                           onPress: () {
                             editTopic(topic);
                           },
-                          child: FIcon(FAssets.icons.penLine),
+                          child: Icon(FIcons.penLine),
                         ),
                       );
                     },

@@ -1,8 +1,12 @@
-class Diagnosis {
+import 'package:doctor_on_duty/main.dart';
+import 'package:objectbox/objectbox.dart';
+
+class Diagnosis extends Model {
+  @Id()
+  int id = 0;
   Diagnosis() {
     validate();
   }
-  String id = randomId;
   String name = '';
   String description = '';
   String symptoms = '';

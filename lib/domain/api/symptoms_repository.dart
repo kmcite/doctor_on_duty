@@ -1,58 +1,59 @@
 import 'package:doctor_on_duty/domain/models/symptom.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
 
-final symptomsRepositoryRM = RM.inject(() => SymptomsRepository());
+import 'package:doctor_on_duty/utils/repositories.dart';
 
-class SymptomsRepository {
-  Future<Symptom?> get(String id) async {
-    return null;
+final symptomsRepository = SymptomsRepository();
 
-    // final document = await databases.getDocument(
-    //   databaseId: DATABASE_ID,
-    //   collectionId: SYMPTOMS_COLLECTION_ID,
-    //   documentId: id,
-    // );
-    // return Symptom.fromJson(document.data);
-  }
+class SymptomsRepository extends CrudRepository<Symptom> {
+  // Future<Symptom?> get(String id) async {
+  //   return null;
 
-  Future<List<Symptom>> getAll() async {
-    // final documents = await databases.listDocuments(
-    //   databaseId: DATABASE_ID,
-    //   collectionId: SYMPTOMS_COLLECTION_ID,
-    // );
-    // return documents.documents.map(
-    //   (document) {
-    //     return Symptom.fromJson(document.data);
-    //   },
-    // ).toList();
-    return [];
-  }
+  //   // final document = await databases.getDocument(
+  //   //   databaseId: DATABASE_ID,
+  //   //   collectionId: SYMPTOMS_COLLECTION_ID,
+  //   //   documentId: id,
+  //   // );
+  //   // return Symptom.fromJson(document.data);
+  // }
 
-  Future<void> put(Symptom symptom) async {
-    // try {
-    //   await databases.updateDocument(
-    //     databaseId: DATABASE_ID,
-    //     collectionId: SYMPTOMS_COLLECTION_ID,
-    //     documentId: symptom.id,
-    //     data: symptom.toJson(),
-    //   );
-    //   print('UPDATED ${symptom.id}');
-    // } catch (e) {
-    //   await databases.createDocument(
-    //     data: symptom.toJson(),
-    //     databaseId: DATABASE_ID,
-    //     collectionId: SYMPTOMS_COLLECTION_ID,
-    //     documentId: symptom.id,
-    //   );
-    //   print('CREATED ${symptom.id}');
-    // }
-  }
+  // Future<List<Symptom>> getAll() async {
+  //   // final documents = await databases.listDocuments(
+  //   //   databaseId: DATABASE_ID,
+  //   //   collectionId: SYMPTOMS_COLLECTION_ID,
+  //   // );
+  //   // return documents.documents.map(
+  //   //   (document) {
+  //   //     return Symptom.fromJson(document.data);
+  //   //   },
+  //   // ).toList();
+  //   return [];
+  // }
 
-  Future<void> delete(String id) async {
-    // await databases.deleteDocument(
-    //   databaseId: DATABASE_ID,
-    //   collectionId: SYMPTOMS_COLLECTION_ID,
-    //   documentId: id,
-    // );
-  }
+  // Future<void> put(Symptom symptom) async {
+  //   // try {
+  //   //   await databases.updateDocument(
+  //   //     databaseId: DATABASE_ID,
+  //   //     collectionId: SYMPTOMS_COLLECTION_ID,
+  //   //     documentId: symptom.id,
+  //   //     data: symptom.toJson(),
+  //   //   );
+  //   //   print('UPDATED ${symptom.id}');
+  //   // } catch (e) {
+  //   //   await databases.createDocument(
+  //   //     data: symptom.toJson(),
+  //   //     databaseId: DATABASE_ID,
+  //   //     collectionId: SYMPTOMS_COLLECTION_ID,
+  //   //     documentId: symptom.id,
+  //   //   );
+  //   //   print('CREATED ${symptom.id}');
+  //   // }
+  // }
+
+  // Future<void> delete(String id) async {
+  //   // await databases.deleteDocument(
+  //   //   databaseId: DATABASE_ID,
+  //   //   collectionId: SYMPTOMS_COLLECTION_ID,
+  //   //   documentId: id,
+  //   // );
+  // }
 }

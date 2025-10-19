@@ -5,25 +5,25 @@ import '../../main.dart';
 import '../../domain/api/navigator.dart';
 
 mixin ViewTopicBloc {
-  Modifier<Topic> get topic => throw topicsRepository;
+  Topic topic([Topic? v]) => throw topicsRepository;
   // Topic get topic => topicsRepository.get(id as int)!;
   // late final back = navigationRepository.back;
 }
 
-class ViewTopicPage extends UI with ViewTopicBloc {
+class ViewTopicPage extends StatelessWidget with ViewTopicBloc {
   ViewTopicPage();
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader(
         title: Text(topic().name),
-        actions: [
+        suffixes: [
           FHeaderAction.back(
             onPress: navigator.back,
           ),
         ],
       ),
-      content: FCard(
+      child: FCard(
         title: topic().name.text(),
         subtitle: SingleChildScrollView(
           child: Column(

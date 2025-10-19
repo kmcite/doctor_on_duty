@@ -1,39 +1,53 @@
 import 'package:doctor_on_duty/domain/api/navigator.dart';
-import '../../main.dart';
-import 'symptoms_bloc.dart';
+import 'package:doctor_on_duty/domain/api/symptoms_repository.dart';
+import 'package:doctor_on_duty/domain/models/symptom.dart';
+import 'package:doctor_on_duty/main.dart';
+import 'package:doctor_on_duty/ui/search_symptoms.dart';
 
-class SymptomsPage extends UI {
-  static const path = '/symptoms_page';
+class SymptomsPage extends StatefulWidget {
+  @override
+  State<SymptomsPage> createState() => _SymptomsPageState();
+}
+
+class _SymptomsPageState extends State<SymptomsPage> {
+  late SymptomsRepository symptomsRepository = watch();
+  void put(Symptom symptom) async {
+    symptomsRepository.put(symptom);
+  }
+
+  List<Symptom> get symptoms => symptomsRepository.getAll();
+
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
         title: 'Symptoms'.text(),
-        prefixActions: [
+        prefixes: [
           FButton.icon(
             onPress: navigator.back,
-            child: FIcon(FAssets.icons.arrowLeft),
+            child: Icon(FIcons.arrowLeft),
           ),
         ],
-        suffixActions: [
+        suffixes: [
           FButton.icon(
             onPress: () {
               // navigator.toNamed(SearchSymptomPage.path);
+              navigator.to(SearchSymptomPage());
             },
             child: Icon(Icons.search),
           ),
         ],
       ),
-      content:
+      child:
           // symptomsBlocRM.state.symptomsRM.isWaiting
           //     ? CircularProgressIndicator().center()
           //     :
           RefreshIndicator(
-        onRefresh: symptomsBlocRM.state.symptomsRM.refresh,
+        onRefresh: () async {},
         child: ListView.builder(
-          itemCount: symptomsBlocRM.state.symptoms.length,
+          itemCount: symptoms.length,
           itemBuilder: (context, index) {
-            final symptom = symptomsBlocRM.state.symptoms[index];
+            final symptom = symptoms[index];
             return ListTile(
               title: symptom.name.toString().text(),
               onTap: () {

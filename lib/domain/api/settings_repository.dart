@@ -1,29 +1,14 @@
-import 'dart:async';
+import 'package:doctor_on_duty/domain/models/settings.dart';
+import 'package:doctor_on_duty/utils/repositories.dart';
 
 final settingsRepository = SettingsRepository();
 
-class SettingsRepository extends Repository<bool> {
-  SettingsRepository() {}
-  @override
-  bool get initialValue => true;
-}
-
-abstract class Repository<T> {
-  Repository() {
-    _value = initialValue;
-    controller.add(_value);
+class SettingsRepository extends Repository<Settings> {
+  bool dark = false;
+  void toggleDarkness() {
+    dark = !dark;
+    notifyListeners();
   }
-  late T _value;
-  T get value => _value;
-  T get initialValue;
 
-  final controller = StreamController<T>.broadcast();
-
-  Stream<T> call([T? value]) {
-    if (value != null) {
-      controller.add(value);
-      _value = value;
-    }
-    return controller.stream;
-  }
+  get initialState => Settings();
 }

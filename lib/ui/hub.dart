@@ -1,6 +1,7 @@
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/ui/cases/cases.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
+import 'package:doctor_on_duty/ui/search_symptoms.dart';
 
 import 'settings.dart';
 
@@ -9,44 +10,49 @@ class Hub extends StatelessWidget {
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader(
-        title: Text("Doctor on Duty").pad(),
-        actions: [
+        title: Text("HealthCare +").pad(),
+        suffixes: [
           FButton.icon(
-            child: FIcon(FAssets.icons.settings),
+            child: Icon(FIcons.settings),
             onPress: () => navigator.to(SettingsPage()),
           ),
         ],
       ),
-      content: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             spacing: 12,
             children: [
               FTile(
+                prefix: Icon(FIcons.info),
                 title: Text("Cases"),
                 onPress: () {
                   navigator.to(CasesPage());
                 },
               ),
               FTile(
+                prefix: Icon(FIcons.ambulance),
                 title: Text("Emergency"),
                 onPress: () {},
               ),
               FTile(
+                prefix: Icon(FIcons.search),
                 title: Text("Search"),
-                onPress: () {},
+                onPress: () {
+                  navigator.to(SearchSymptomPage());
+                },
               ),
               FTile(
+                prefix: Icon(FIcons.heartPulse),
                 title: Text("Favorites"),
                 onPress: () {},
               ),
+              FTile(title: RecentlyAddedCases()), // Custom widget
+              FTile(title: RecentlyViewedCases()), // Optional
+              FTile(title: CaseOfTheDay()),
             ],
           ),
-          SizedBox(height: 16),
-          RecentlyAddedCases(), // Custom widget
-          RecentlyViewedCases(), // Optional
-          CaseOfTheDay(),
         ],
       ),
     );

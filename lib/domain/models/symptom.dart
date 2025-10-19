@@ -1,6 +1,11 @@
-class Symptom {
+import 'package:doctor_on_duty/main.dart';
+import 'package:objectbox/objectbox.dart';
+
+@Entity()
+class Symptom extends Model {
   Symptom();
-  String id = randomId;
+  @Id()
+  int id = 0;
   String name = '';
   String description = '';
   String examination = '';

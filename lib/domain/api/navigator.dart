@@ -12,11 +12,8 @@ class Navigation {
     navigate.to(page);
   }
 
-  void back() {
-    navigate.back();
-  }
-
-  void dialog(Widget dialog) {
-    navigate.toDialog(dialog);
+  void back<T extends Object>([T? result]) => navigate.back(result);
+  Future<T?> dialog<T>(Widget dialog) {
+    return navigate.toDialog(dialog);
   }
 }

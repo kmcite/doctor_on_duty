@@ -2,7 +2,7 @@ import 'package:doctor_on_duty/domain/models/symptom.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:flutter/cupertino.dart';
 
-class SymptomPage extends UI {
+class SymptomPage extends StatelessWidget {
   static const path = '/symptom_page';
 
   @override

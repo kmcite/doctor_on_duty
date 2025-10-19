@@ -2,7 +2,7 @@ import 'package:doctor_on_duty/domain/models/diagnosis.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
-class DiagnosisPage extends UI {
+class DiagnosisPage extends StatelessWidget {
   static const path = '/diagnosis_page';
 
   @override
@@ -11,27 +11,27 @@ class DiagnosisPage extends UI {
     return FScaffold(
       header: FHeader(
         title: diagnosis.name.text(),
-        actions: [
+        suffixes: [
           FButton.icon(
             onPress: () {
               navigator.back();
             },
-            child: FIcon(FAssets.icons.arrowLeft),
+            child: Icon(FIcons.arrowLeft),
           ),
           FButton.icon(
             onPress: () {
               // navigator.toNamed(EditDiagnosisPage.path, arguments: diagnosis);
             },
-            child: FIcon(FAssets.icons.pen),
+            child: Icon(FIcons.pen),
           ),
         ],
       ),
-      content: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           FAccordion(
             controller: FAccordionController(max: 3),
-            items: [
+            children: [
               FAccordionItem(
                 title: 'symptoms'.text(),
                 child: diagnosis.symptoms.text(),

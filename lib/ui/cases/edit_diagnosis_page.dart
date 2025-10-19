@@ -2,7 +2,7 @@ import 'package:doctor_on_duty/domain/models/diagnosis.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
-class EditDiagnosisPage extends UI {
+class EditDiagnosisPage extends StatelessWidget {
   static const path = '/edit_diagnosis_page';
 
   @override
@@ -11,7 +11,7 @@ class EditDiagnosisPage extends UI {
     return FScaffold(
       header: FHeader(
         title: 'New Diagnosis'.text(),
-        actions: [
+        suffixes: [
           FButton.icon(
             onPress: navigator.back,
             child: Icon(Icons.arrow_back),
@@ -32,11 +32,11 @@ class EditDiagnosisPage extends UI {
           ),
         ],
       ),
-      content: Column(
+      child: Column(
         children: [
           FTextField(
             label: 'Name'.text(),
-            initialValue: diagnosis.name,
+            initialText: diagnosis.name,
             onChange: (value) {
               diagnosis..name = value;
             },
@@ -44,7 +44,7 @@ class EditDiagnosisPage extends UI {
           ).pad(),
           FTextField(
             label: 'Symptoms'.text(),
-            initialValue: diagnosis.symptoms,
+            initialText: diagnosis.symptoms,
             onChange: (value) {
               diagnosis..symptoms = value;
             },
@@ -53,7 +53,7 @@ class EditDiagnosisPage extends UI {
           ).pad(),
           FTextField(
             label: 'Examination'.text(),
-            initialValue: diagnosis.examination,
+            initialText: diagnosis.examination,
             onChange: (value) {
               diagnosis..examination = value;
             },
@@ -62,7 +62,7 @@ class EditDiagnosisPage extends UI {
           ).pad(),
           FTextField(
             label: 'Description'.text(),
-            initialValue: diagnosis.description,
+            initialText: diagnosis.description,
             onChange: (value) {
               diagnosis..description = value;
             },
@@ -71,7 +71,7 @@ class EditDiagnosisPage extends UI {
           ).pad(),
           FTextField(
             label: 'Investigations'.text(),
-            initialValue: diagnosis.investigations,
+            initialText: diagnosis.investigations,
             onChange: (value) {
               diagnosis..investigations = value;
             },
@@ -80,7 +80,7 @@ class EditDiagnosisPage extends UI {
           ).pad(),
           FTextField(
             label: 'differentials'.text(),
-            initialValue: diagnosis.differentials,
+            initialText: diagnosis.differentials,
             onChange: (value) {
               diagnosis..differentials = value;
             },

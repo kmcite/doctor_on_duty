@@ -3,7 +3,7 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 
 import '../../domain/models/symptom.dart';
 
-class EditSymptomPage extends UI {
+class EditSymptomPage extends StatelessWidget {
   static const path = '/edit_symptom_page';
 
   @override

@@ -1,39 +1,41 @@
+import 'package:doctor_on_duty/domain/models/diagnosis.dart';
 import 'package:doctor_on_duty/main.dart';
-import 'package:doctor_on_duty/ui/cases/diagnoses_bloc.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
-class DiagnosesPage extends UI {
+List<Diagnosis> get diagnoses => [];
+
+class DiagnosesPage extends StatelessWidget {
   static const path = '/diagnoses_page';
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
         title: 'Diagnoses'.text(),
-        prefixActions: [
+        prefixes: [
           FButton.icon(
             onPress: navigator.back,
-            child: FIcon(FAssets.icons.arrowLeft),
+            child: Icon(FIcons.arrowLeft),
           ),
         ],
-        suffixActions: [
+        suffixes: [
           // FButton.icon(
           //   onPress: () => navigator.toNamed(SearchDiagnosisPage.path),
           //   child: Icon(Icons.search),
           // ),
         ],
       ),
-      content:
+      child:
           //  diagnosesBlocRM.state.loading
           //     ? CircularProgressIndicator().center()
           //     :
           RefreshIndicator(
-        onRefresh: diagnosesBlocRM.state.diagnosesRM.refresh,
+        onRefresh: () async {},
         child: ListView.builder(
-          itemCount: diagnosesBlocRM.state.diagnoses.length,
+          itemCount: diagnoses.length,
           itemBuilder: (context, index) {
-            final diagnosis = diagnosesBlocRM.state.diagnoses[index];
+            final diagnosis = diagnoses[index];
             return FButton(
-              label: diagnosis.name.toString().text(),
+              child: diagnosis.name.toString().text(),
               onPress: () {
                 // navigator.toNamed(
                 //   DiagnosisPage.path,
@@ -53,7 +55,7 @@ class DiagnosesPage extends UI {
           //   arguments: Diagnosis(),
           // );
         },
-        label: 'Add Diagnosis'.text(),
+        child: 'Add Diagnosis'.text(),
       ).pad(),
     );
   }

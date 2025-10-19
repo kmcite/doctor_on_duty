@@ -1,54 +1,85 @@
+import 'package:doctor_on_duty/domain/api/cases_repository.dart';
+import 'package:doctor_on_duty/domain/models/case.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
+import 'package:doctor_on_duty/ui/case.dart';
 
-mixin class CasesBloc {
-  final indexRM = RM.inject(() => 0);
-}
+final indexRM = RM.inject(() => 0);
 
-class CasesPage extends UI with CasesBloc {
+class CasesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
         title: 'Cases'.text(),
-        prefixActions: [
+        prefixes: [
           FButton.icon(
-            child: FIcon(FAssets.icons.x),
+            child: Icon(FIcons.x),
             onPress: navigator.back,
           ),
         ],
+        suffixes: [
+          FButton.icon(
+            child: Icon(FIcons.plus),
+            onPress: () {
+              casesRepository.put(Caze());
+            },
+          )
+        ],
       ),
-      content: FTabs(
-        initialIndex: indexRM.state,
-        onPress: (value) => indexRM.state = value,
-        tabs: [
-          FTabEntry(
+      child: [
+        OpdCases(),
+        EmergencyCases(),
+      ][indexRM.state],
+      footer: FBottomNavigationBar(
+        index: indexRM.state,
+        onChange: (value) => indexRM.state = value,
+        children: [
+          FBottomNavigationBarItem(
             label: 'OPD'.text(),
-            content: 'opd'.text(),
+            icon: Icon(FIcons.house),
           ),
-          FTabEntry(
+          FBottomNavigationBarItem(
             label: 'Emergency'.text(),
-            content: EmergencyCases(),
-          ),
+            icon: Icon(FIcons.paintbrush),
+          )
         ],
       ),
     );
   }
 }
 
-class EmergencyCases extends UI {
+class OpdCases extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      child: ListView(
-        shrinkWrap: true,
-        children: List.generate(
-          40,
-          (index) => FTile(
-            title: 'Emergency Case $index'.text(),
-            onPress: () {},
-          ),
+    return ListView(
+      shrinkWrap: true,
+      children: List.generate(
+        casesRepository.count(),
+        (index) {
+          final caze = casesRepository.getAll().elementAt(index);
+          return FTile(
+            title: caze.text(),
+            onPress: () {
+              navigator.to(CazePage(caze: caze));
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class EmergencyCases extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      shrinkWrap: true,
+      children: List.generate(
+        40,
+        (index) => FTile(
+          title: 'Emergency Case $index'.text(),
+          onPress: () {},
         ),
       ),
     );

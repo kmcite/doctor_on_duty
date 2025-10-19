@@ -1,23 +1,36 @@
 // ignore_for_file: unused_field
 
 import 'package:doctor_on_duty/domain/models/chapter.dart';
-import 'package:doctor_on_duty/domain/api/chapters_api.dart';
+import 'package:doctor_on_duty/domain/api/chapters_repository.dart';
 import 'package:doctor_on_duty/domain/models/topic.dart';
 import 'package:doctor_on_duty/domain/api/topics_repository.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
 import '../../main.dart';
 
-mixin class EditTopicBloc {
-  final topicsRM = RM.injectStream(topicsRepository.watchAll);
-  final chaptersRM = RM.injectStream(chaptersRepository.watchAll);
-  bool get loading => chaptersRM.isWaiting || topicsRM.isWaiting;
-  Topic? byId(int id) => topicsRM.state.where(
+mixin class EditTopicBloc {}
+
+class EditTopicPage extends StatefulWidget with EditTopicBloc {
+  EditTopicPage({super.key});
+
+  @override
+  State<EditTopicPage> createState() => _EditTopicPageState();
+}
+
+class _EditTopicPageState extends State<EditTopicPage> {
+  late TopicsRepository topicsRepository = watch();
+  late ChaptersRepository chaptersRepository = watch();
+
+  Iterable<Topic> get topics => topicsRepository.getAll();
+  Iterable<Chapter> get chapters => chaptersRepository.getAll();
+
+  bool get loading => false;
+  Topic? byId(int id) => topics.where(
         (test) {
           return test.id == id;
         },
       ).firstOrNull;
-  Modifier<Topic> get edit => throw topicsRepository;
+  Topic edit([Topic? v]) => throw topicsRepository;
 
   String name([String? _value]) {
     if (_value != null) {
@@ -38,19 +51,16 @@ mixin class EditTopicBloc {
   void chapterSelected(Chapter chapter) {
     // edit(edit().copyWith(chapter: chapter));
   }
-}
 
-class EditTopicPage extends UI with EditTopicBloc {
-  EditTopicPage({super.key});
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
         title: Text(edit().name),
-        prefixActions: [
+        prefixes: [
           FHeaderAction.back(onPress: navigator.back),
         ],
-        suffixActions: [
+        suffixes: [
           // hasChanges
           //     ? FHeaderAction(
           //       onPress: save,
@@ -59,7 +69,7 @@ class EditTopicPage extends UI with EditTopicBloc {
           //     : FHeaderAction.back(onPress: back),
         ],
       ),
-      content: ListView(
+      child: ListView(
         children: [
           // FLabel(
           //   label: 'Select chapter'.text(),
@@ -89,7 +99,7 @@ class EditTopicPage extends UI with EditTopicBloc {
           // ),
           FTextField(
             label: Text('enter topic name'),
-            initialValue: edit().name,
+            initialText: edit().name,
             onChange: (value) {
               // edit().copyWith(name: value);
               // put(topic.copyWith(name: value));
@@ -98,7 +108,7 @@ class EditTopicPage extends UI with EditTopicBloc {
           ),
           FTextField(
             label: Text('Enter topic description'),
-            initialValue: edit().description,
+            initialText: edit().description,
             onChange: (value) {
               // put(
               //   topic.copyWith(description: value),
@@ -108,7 +118,7 @@ class EditTopicPage extends UI with EditTopicBloc {
           ),
           FTextField(
             label: Text('Enter topic definition'),
-            initialValue: edit().definition,
+            initialText: edit().definition,
             onChange: (value) {
               // put(
               //   topic.copyWith(definition: value),
@@ -118,7 +128,7 @@ class EditTopicPage extends UI with EditTopicBloc {
           ),
           FTextField(
             label: Text('Enter topic epidemiology'),
-            initialValue: edit().epidemiology,
+            initialText: edit().epidemiology,
             onChange: (value) {
               // put(
               //   topic.copyWith(epidemiology: value),

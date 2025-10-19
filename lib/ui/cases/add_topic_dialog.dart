@@ -4,9 +4,9 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 import '../../domain/models/chapter.dart';
 import '../../domain/models/topic.dart';
 
+final topic = RM.inject(() => Topic());
+final chapters = RM.inject(() => <Chapter>[]);
 mixin AddTopicBloc {
-  final topic = RM.inject(() => Topic());
-  final chapters = RM.inject(() => <Chapter>[]);
   bool isChapterSelected(Chapter chapter) => topic.state.id != chapter.id;
 
   void name(String value) {
@@ -22,7 +22,7 @@ mixin AddTopicBloc {
   }
 }
 
-class AddTopicDialog extends UI with AddTopicBloc {
+class AddTopicDialog extends StatelessWidget with AddTopicBloc {
   @override
   Widget build(BuildContext context) {
     return FDialog(
@@ -50,8 +50,11 @@ class AddTopicDialog extends UI with AddTopicBloc {
       ),
       direction: Axis.horizontal,
       actions: [
-        FButton(onPress: () => save(), label: Text('save')),
-        FButton(onPress: () => navigator.back(), label: Text('cancel')),
+        FButton(onPress: () => save(), child: Text('save')),
+        FButton(
+          onPress: () => navigator.back(),
+          child: Text('cancel'),
+        ),
       ],
     );
   }

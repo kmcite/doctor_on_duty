@@ -1,14 +1,32 @@
-import 'package:doctor_on_duty/domain/api/chapters_api.dart'
-    show chaptersRepository;
+import 'package:doctor_on_duty/domain/api/chapters_repository.dart'
+    show ChaptersRepository;
 import 'package:doctor_on_duty/domain/api/topics_repository.dart'
-    show topicsRepository;
+    show TopicsRepository;
 import 'package:doctor_on_duty/domain/models/topic.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
 import '../../main.dart';
 import '../../domain/models/chapter.dart';
 
-mixin ChaptersBloc {
+mixin ChaptersBloc {}
+
+class ChaptersPage extends StatefulWidget with ChaptersBloc {
+  ChaptersPage({super.key});
+
+  @override
+  State<ChaptersPage> createState() => _ChaptersPageState();
+}
+
+class _ChaptersPageState extends State<ChaptersPage> {
+  late ChaptersRepository chaptersRepository = watch();
+  late TopicsRepository topicsRepository = watch();
+
+  final editing = RM.inject(() => true);
+  void toggleEditing() => editing.state = (!editing.state);
+
+  List<Chapter> get chapters => chaptersRepository.getAll();
+  List<Topic> get topics => topicsRepository.getAll();
+  bool get loading => false;
   void updateChapter(Chapter chapter) {
     // chaptersApi.update(chapter);
   }
@@ -35,19 +53,13 @@ mixin ChaptersBloc {
 
   int numberOfTopics(Chapter chapter) {
     return topics
-        .state
+
         // .where((topic) {
         //   return topic.chapter.id == chapter.id;
         // })
         .length;
   }
 
-  final editing = RM.inject(() => true);
-  void toggleEditing() => editing.state = (!editing.state);
-
-  final chapters = RM.injectStream(chaptersRepository.watchAll);
-  final topics = RM.injectStream(topicsRepository.watchAll);
-  bool get loading => chapters.isWaiting || topics.isWaiting;
   void addNewChapter() {
     // chaptersApi.insert(
     //   Chapter(),
@@ -59,48 +71,44 @@ mixin ChaptersBloc {
     // chapter(_chapter);
     navigator.dialog(EditChapterDialog());
   }
-}
-
-class ChaptersPage extends UI with ChaptersBloc {
-  ChaptersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader(
         title: const Text('Chapters'),
-        actions: [
+        suffixes: [
           FButton.icon(
             onPress: navigator.back,
-            child: FIcon(FAssets.icons.arrowLeft),
+            child: Icon(FIcons.arrowLeft),
           ),
           FButton.icon(
-            style:
-                editing.state ? FButtonStyle.primary : FButtonStyle.destructive,
-            child:
-                FIcon(editing.state ? FAssets.icons.check : FAssets.icons.pen),
+            style: editing.state
+                ? FButtonStyle.primary()
+                : FButtonStyle.destructive(),
+            child: Icon(editing.state ? FIcons.check : FIcons.pen),
             onPress: toggleEditing,
           ),
           FButton.icon(
-            child: FIcon(FAssets.icons.plus),
+            child: Icon(FIcons.plus),
             onPress: addNewChapter,
           ),
         ],
       ),
-      content: loading
+      child: loading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: chapters.state.length,
+              itemCount: chapters.length,
               itemBuilder: (context, index) {
-                final _chapter = chapters.state.elementAt(index);
+                final _chapter = chapters.elementAt(index);
                 return FTile(
                   key: Key(_chapter.id.toString()),
                   title: Text(_chapter.name),
-                  suffixIcon: FButton.icon(
-                    style: FButtonStyle.destructive,
-                    child: FIcon(FAssets.icons.delete),
+                  suffix: FButton.icon(
+                    style: FButtonStyle.destructive(),
+                    child: Icon(FIcons.delete),
                     onPress: () {
                       removeChapter(_chapter);
                     },
@@ -114,7 +122,7 @@ class ChaptersPage extends UI with ChaptersBloc {
   }
 }
 
-class EditChapterDialog extends UI {
+class EditChapterDialog extends StatelessWidget {
   // Modifier<Chapter> get chapter => chaptersApi.editRM;
   okay() {
     // chaptersApi.update(chapter());
@@ -161,11 +169,11 @@ class EditChapterDialog extends UI {
       actions: [
         FButton(
           onPress: okay,
-          label: 'okay'.text(),
+          child: 'okay'.text(),
         ),
         FButton(
           onPress: cancel,
-          label: 'cancel'.text(),
+          child: 'cancel'.text(),
         ),
       ],
       direction: Axis.horizontal,

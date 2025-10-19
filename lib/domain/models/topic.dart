@@ -1,11 +1,4 @@
-// import 'package:copy_with_extension/copy_with_extension.dart';
-// import 'package:floor/floor.dart';
-
-// part 'topic.g.dart';
-
-// @entity
-// @CopyWith()
-import 'package:doctor_on_duty/domain/repository.dart';
+import '../../main.dart';
 
 class Topic extends Model {
   int id = 0;

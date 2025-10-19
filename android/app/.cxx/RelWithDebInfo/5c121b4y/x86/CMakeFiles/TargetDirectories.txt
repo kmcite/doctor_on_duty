@@ -1,2 +1,0 @@
-D:/projects/doctor_on_duty/android/app/.cxx/RelWithDebInfo/5c121b4y/x86/CMakeFiles/edit_cache.dir
-D:/projects/doctor_on_duty/android/app/.cxx/RelWithDebInfo/5c121b4y/x86/CMakeFiles/rebuild_cache.dir

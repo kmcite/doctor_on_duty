@@ -1,4 +1,4 @@
-import 'package:doctor_on_duty/domain/repository.dart';
+import 'package:doctor_on_duty/utils/model.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

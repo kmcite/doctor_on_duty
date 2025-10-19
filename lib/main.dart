@@ -1,50 +1,56 @@
-import 'dart:async';
-
+import 'package:doctor_on_duty/domain/api/picker.dart';
 import 'package:doctor_on_duty/domain/api/settings_repository.dart';
 import 'package:doctor_on_duty/objectbox.g.dart';
 import 'package:doctor_on_duty/ui/hub.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
+import 'package:doctor_on_duty/utils/repositories.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path/path.dart';
 export 'package:forui/forui.dart';
 
 import 'main.dart';
+import 'utils/services.dart';
 
+export 'package:doctor_on_duty/utils/extensions/state.dart';
 export 'dart:io';
 export 'package:colornames/colornames.dart';
 export 'package:doctor_on_duty/ui/cases/chapters_page.dart';
-export 'package:flutter/material.dart';
+export 'package:flutter/material.dart' hide State;
 export 'package:google_fonts/google_fonts.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:manager/manager.dart';
+// export 'package:manager/manager.dart';
 export 'package:states_rebuilder/states_rebuilder.dart';
-
-late final Store store;
+export 'package:doctor_on_duty/utils/extensions/dynamic.dart';
+export 'package:doctor_on_duty/utils/extensions/widget.dart';
+export 'package:doctor_on_duty/utils/model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  store = await openStore();
-  runApp(App());
+  final path = await getApplicationDocumentsDirectory();
+  final appInfo = await PackageInfo.fromPlatform();
+  final store = await openStore(
+    directory: join(path.path, appInfo.packageName),
+  );
+  service(store);
+
+  repository(SettingsRepository());
+  repository(PickerRepository());
+
+  runApp(
+    App(),
+  );
 }
 
-final _appBloc = AppBloc();
-
-class AppBloc extends Bloc<void, bool> {
-  StreamSubscription? _subscription;
-  AppBloc() : super() {
-    _subscription = settingsRepository().listen(emit);
-  }
-  @override
-  bool get initialState => settingsRepository.value;
+class App extends StatefulWidget {
+  const App({super.key});
 
   @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
+  State<App> createState() => _AppState();
 }
 
-class App extends UI {
-  App({super.key});
-
+class _AppState extends State<App> {
+  late SettingsRepository settingsRepository = watch();
+  bool get dark => settingsRepository.dark;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,17 +58,16 @@ class App extends UI {
       navigatorKey: navigator.key,
       builder: (context, child) {
         return FTheme(
-          data: switch (_appBloc()) {
+          data: switch (dark) {
             false => FThemes.yellow.light,
             true => FThemes.yellow.dark,
           },
           child: child!,
         );
       },
-      themeMode: _appBloc() ? ThemeMode.dark : ThemeMode.light,
+      themeMode: dark ? ThemeMode.dark : ThemeMode.light,
+      themeAnimationDuration: Durations.long2,
       home: Hub(),
     );
   }
 }
-
-typedef UI = ReactiveStatelessWidget;

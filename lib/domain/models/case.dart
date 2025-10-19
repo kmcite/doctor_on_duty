@@ -1,9 +1,10 @@
-import 'package:doctor_on_duty/domain/models/chapter.dart';
-import 'package:doctor_on_duty/domain/repository.dart';
+import 'package:doctor_on_duty/utils/model.dart';
 import 'package:objectbox/objectbox.dart';
 
+import 'chapter.dart';
+
 @Entity()
-class Case extends Model {
+class Caze extends Model {
   @Id()
   int id = 0;
   String name = '';
