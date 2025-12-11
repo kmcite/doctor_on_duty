@@ -1,27 +1,19 @@
 import 'dart:convert';
 
-import 'package:doctor_on_duty/domain/api/picker.dart';
-import 'package:doctor_on_duty/domain/api/settings_repository.dart';
+import 'package:doctor_on_duty/domain/api/import_export_repository.dart';
+import 'package:doctor_on_duty/domain/reads/settings.dart';
 import 'package:doctor_on_duty/main.dart';
 
 import '../domain/api/navigator.dart';
 
-class SettingsPage extends StatefulWidget {
+Map<String, dynamic> json = {};
+
+class SettingsPage extends UI {
   const SettingsPage({super.key});
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  late SettingsRepository settingsRepository = watch();
   void toggleDark() {
-    settingsRepository.toggleDarkness();
+    onDarkChanged(!darkRead.state);
   }
-
-  Map<String, dynamic> json = {};
-
-  bool get dark => settingsRepository.dark;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
         title: 'Settings'.text(),
         prefixes: [
           FButton.icon(
-            child: Icon(FIcons.x),
             onPress: navigator.back,
+            child: Icon(FIcons.x),
           ),
         ],
       ),
@@ -40,18 +32,18 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           FButton(
             child: Icon(
-              dark ? FIcons.moon : FIcons.sun,
+              darkRead.state ? FIcons.moon : FIcons.sun,
               size: 50,
             ),
             onPress: () => toggleDark(),
           ),
           FButton(
             onPress: () async {
-              final result = await navigator
-                  .dialog<Map<String, dynamic>>(ImportExportDialog());
+              final result = await navigator.dialog<Map<String, dynamic>>(
+                ImportExportDialog(),
+              );
               if (result == null) return;
               json = result;
-              rebuild();
             },
             prefix: Icon(Icons.import_export),
             child: 'Import/Export'.text(),
@@ -75,7 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                     ),
                   ),
-                )
+                ),
             ],
           ),
         ],
@@ -91,17 +83,12 @@ enum OperationStatus {
   files,
 }
 
-class ImportExportDialog extends StatefulWidget {
+OperationStatus status = OperationStatus.idle;
+
+class ImportExportDialog extends UI {
   const ImportExportDialog({super.key});
   @override
-  State<ImportExportDialog> createState() => _ImportExportDialogState();
-}
-
-class _ImportExportDialogState extends State<ImportExportDialog> {
-  late PickerRepository pickerRepository = watch();
-
-  OperationStatus status = OperationStatus.idle;
-
+  // late PickerRepository pickerRepository = watch();
   @override
   Widget build(BuildContext context) {
     return FDialog(
@@ -111,44 +98,33 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
               ? null
               : () async {
                   status = OperationStatus.exporting;
-                  rebuild();
-                  final path = await pickerRepository.pickDirectoryPath();
-                  if (path == null) {
-                    status = OperationStatus.idle;
-                    rebuild();
-                    return;
-                  }
-
-                  print('file');
-                  navigator.back();
+                  await exportInAppData([0]);
+                  // final path = await pickerRepository.pickDirectoryPath();
                   status = OperationStatus.idle;
-                  rebuild();
+                  navigator.back();
                 },
-          child: Text('Export'),
           prefix: status == OperationStatus.exporting
               ? FCircularProgress.loader()
               : Icon(FIcons.upload),
+          child: Text('Export'),
         ),
         FButton(
           onPress: status == OperationStatus.importing
               ? null
               : () async {
                   status = OperationStatus.importing;
-                  rebuild();
-
-                  final path = await pickerRepository.pickFilePath();
+                  final path = 0 as dynamic;
                   status = OperationStatus.idle;
-                  rebuild();
                   if (path == null) return;
                   final file = File(path);
                   final string = await file.readAsString();
                   final json = jsonDecode(string);
                   navigator.back(json);
                 },
-          child: Text('Import'),
           prefix: status == OperationStatus.importing
               ? FCircularProgress.loader()
               : Icon(FIcons.download),
+          child: Text('Import'),
         ),
       ],
     );

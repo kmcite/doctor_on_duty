@@ -11,7 +11,7 @@ mixin ViewTopicBloc {
 }
 
 class ViewTopicPage extends StatelessWidget with ViewTopicBloc {
-  ViewTopicPage();
+  ViewTopicPage({super.key});
   @override
   Widget build(BuildContext context) {
     return FScaffold(

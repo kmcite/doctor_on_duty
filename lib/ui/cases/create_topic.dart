@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:doctor_on_duty/domain/api/topics_repository.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
@@ -6,23 +9,29 @@ import '../../domain/models/topic.dart';
 
 final topic = RM.inject(() => Topic());
 final chapters = RM.inject(() => <Chapter>[]);
-mixin AddTopicBloc {
+
+extension on CreateTopicDialog {
   bool isChapterSelected(Chapter chapter) => topic.state.id != chapter.id;
 
   void name(String value) {
+    topic.state = topic.state..name = value;
     // topic((topic().copyWith(name: value)));
   }
+
   void chapter(Chapter value) {
-    // topic(topic().copyWith());
+    topic.state = topic.state..chapterId = value.id;
   }
+
   void save() {
-    // topicsRepository.insert(topic());
+    topicsRepository.put(topic.state);
     navigator.back();
-    print('save');
+    log('save');
   }
 }
 
-class AddTopicDialog extends StatelessWidget with AddTopicBloc {
+class CreateTopicDialog extends StatelessWidget {
+  const CreateTopicDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FDialog(

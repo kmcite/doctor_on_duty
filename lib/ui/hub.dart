@@ -1,11 +1,13 @@
 import 'package:doctor_on_duty/main.dart';
-import 'package:doctor_on_duty/ui/cases/cases.dart';
+import 'package:doctor_on_duty/ui/cases/cazes.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 import 'package:doctor_on_duty/ui/search_symptoms.dart';
 
 import 'settings.dart';
 
-class Hub extends StatelessWidget {
+class Hub extends UI {
+  const Hub({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FScaffold(
@@ -60,6 +62,8 @@ class Hub extends StatelessWidget {
 }
 
 class RecentlyAddedCases extends StatelessWidget {
+  const RecentlyAddedCases({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Placeholder(
@@ -69,6 +73,8 @@ class RecentlyAddedCases extends StatelessWidget {
 }
 
 class RecentlyViewedCases extends StatelessWidget {
+  const RecentlyViewedCases({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Placeholder(
@@ -78,6 +84,8 @@ class RecentlyViewedCases extends StatelessWidget {
 }
 
 class CaseOfTheDay extends StatelessWidget {
+  const CaseOfTheDay({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Placeholder(

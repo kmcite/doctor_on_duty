@@ -3,18 +3,13 @@ import 'package:doctor_on_duty/domain/models/diagnosis.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
 
-class SearchDiagnosisPage extends StatefulWidget {
-  @override
-  State<SearchDiagnosisPage> createState() => _SearchDiagnosisPageState();
-}
+String diagnosisSearchQuery = '';
 
-class _SearchDiagnosisPageState extends State<SearchDiagnosisPage> {
-  late DiagnosesRepository diagnosesRepository = watch();
+class SearchDiagnosisPage extends UI {
+  const SearchDiagnosisPage({super.key});
 
-  String diagnosisSearchQuery = '';
   void changeSearchQuery(String query) {
     diagnosisSearchQuery = query;
-    rebuild();
   }
 
   Iterable<Diagnosis> get searchedDiagnoses {

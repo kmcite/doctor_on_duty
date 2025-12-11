@@ -8,33 +8,21 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 
 import '../../main.dart';
 
-mixin class EditTopicBloc {}
-
-class EditTopicPage extends StatefulWidget with EditTopicBloc {
-  EditTopicPage({super.key});
-
-  @override
-  State<EditTopicPage> createState() => _EditTopicPageState();
-}
-
-class _EditTopicPageState extends State<EditTopicPage> {
-  late TopicsRepository topicsRepository = watch();
-  late ChaptersRepository chaptersRepository = watch();
-
+mixin class EditTopicBloc {
   Iterable<Topic> get topics => topicsRepository.getAll();
   Iterable<Chapter> get chapters => chaptersRepository.getAll();
 
   bool get loading => false;
   Topic? byId(int id) => topics.where(
-        (test) {
-          return test.id == id;
-        },
-      ).firstOrNull;
+    (test) {
+      return test.id == id;
+    },
+  ).firstOrNull;
   Topic edit([Topic? v]) => throw topicsRepository;
 
-  String name([String? _value]) {
-    if (_value != null) {
-      edit(edit()..name = _value);
+  String name([String? value]) {
+    if (value != null) {
+      edit(edit()..name = value);
     }
     return edit().name;
   }
@@ -51,6 +39,10 @@ class _EditTopicPageState extends State<EditTopicPage> {
   void chapterSelected(Chapter chapter) {
     // edit(edit().copyWith(chapter: chapter));
   }
+}
+
+class EditTopicPage extends UI with EditTopicBloc {
+  EditTopicPage({super.key});
 
   @override
   Widget build(BuildContext context) {

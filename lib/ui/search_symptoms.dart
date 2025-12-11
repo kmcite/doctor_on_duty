@@ -16,24 +16,27 @@ Iterable<Symptom> get searchedSymptoms {
 class SearchSymptomPage extends StatelessWidget {
   static const path = '/search_symptom_page';
 
+  const SearchSymptomPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader.nested(
-          titleAlignment: Alignment.centerRight,
-          title: FTextField(
-              // leading: BackButton(),
-              // onChanged: (value) => symptomSearchQueryRM.state = value,
-              ),
-          // leadingWidth: double.maxFinite,
-          prefixes: [
-            FButton.icon(
-              onPress: () {
-                navigator.back();
-              },
-              child: Icon(FIcons.x),
-            ),
-          ]),
+        titleAlignment: Alignment.centerRight,
+        title: FTextField(
+          // leading: BackButton(),
+          // onChanged: (value) => symptomSearchQueryRM.state = value,
+        ),
+        // leadingWidth: double.maxFinite,
+        prefixes: [
+          FButton.icon(
+            onPress: () {
+              navigator.back();
+            },
+            child: Icon(FIcons.x),
+          ),
+        ],
+      ),
       child: ListView.builder(
         itemCount: searchedSymptoms.length,
         itemBuilder: (context, index) {

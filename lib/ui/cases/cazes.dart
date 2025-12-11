@@ -2,11 +2,13 @@ import 'package:doctor_on_duty/domain/api/cases_repository.dart';
 import 'package:doctor_on_duty/domain/models/case.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
-import 'package:doctor_on_duty/ui/case.dart';
+import 'package:doctor_on_duty/ui/caze.dart';
 
 final indexRM = RM.inject(() => 0);
 
 class CasesPage extends StatelessWidget {
+  const CasesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FScaffold(
@@ -14,8 +16,8 @@ class CasesPage extends StatelessWidget {
         title: 'Cases'.text(),
         prefixes: [
           FButton.icon(
-            child: Icon(FIcons.x),
             onPress: navigator.back,
+            child: Icon(FIcons.x),
           ),
         ],
         suffixes: [
@@ -24,13 +26,9 @@ class CasesPage extends StatelessWidget {
             onPress: () {
               casesRepository.put(Caze());
             },
-          )
+          ),
         ],
       ),
-      child: [
-        OpdCases(),
-        EmergencyCases(),
-      ][indexRM.state],
       footer: FBottomNavigationBar(
         index: indexRM.state,
         onChange: (value) => indexRM.state = value,
@@ -42,14 +40,20 @@ class CasesPage extends StatelessWidget {
           FBottomNavigationBarItem(
             label: 'Emergency'.text(),
             icon: Icon(FIcons.paintbrush),
-          )
+          ),
         ],
       ),
+      child: [
+        OpdCases(),
+        EmergencyCases(),
+      ][indexRM.state],
     );
   }
 }
 
 class OpdCases extends StatelessWidget {
+  const OpdCases({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -71,6 +75,8 @@ class OpdCases extends StatelessWidget {
 }
 
 class EmergencyCases extends StatelessWidget {
+  const EmergencyCases({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(

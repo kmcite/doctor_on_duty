@@ -2,6 +2,8 @@ import 'package:doctor_on_duty/domain/models/diagnosis.dart';
 
 import 'package:doctor_on_duty/utils/repositories.dart';
 
+final diagnosesRepository = DiagnosesRepository();
+
 class DiagnosesRepository extends CrudRepository<Diagnosis> {
   // Future<Diagnosis?> get(String id) async {
   //   return null;

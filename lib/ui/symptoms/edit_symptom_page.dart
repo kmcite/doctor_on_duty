@@ -6,6 +6,8 @@ import '../../domain/models/symptom.dart';
 class EditSymptomPage extends StatelessWidget {
   static const path = '/edit_symptom_page';
 
+  const EditSymptomPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final symptom = context.routeData.arguments as Symptom;
@@ -30,8 +32,8 @@ class EditSymptomPage extends StatelessWidget {
             },
             icon: Icon(Icons.done),
           ).pad(
-              // right: 8
-              ),
+            // right: 8
+          ),
         ],
       ),
       body: Column(
@@ -39,13 +41,13 @@ class EditSymptomPage extends StatelessWidget {
           TextFormField(
             initialValue: symptom.name,
             onChanged: (value) {
-              symptom..name = value;
+              symptom.name = value;
             },
           ).pad(),
           TextFormField(
             initialValue: symptom.description,
             onChanged: (value) {
-              symptom..description = value;
+              symptom.description = value;
             },
             maxLines: null,
           ).pad(),

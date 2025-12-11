@@ -2,7 +2,7 @@
 
 import 'package:doctor_on_duty/domain/api/chapters_repository.dart';
 import 'package:doctor_on_duty/domain/api/topics_repository.dart';
-import 'package:doctor_on_duty/ui/cases/add_topic_dialog.dart';
+import 'package:doctor_on_duty/ui/cases/create_topic.dart';
 import 'package:doctor_on_duty/ui/cases/edit_topic_page.dart';
 import 'package:doctor_on_duty/ui/cases/view_topic_page.dart';
 import 'package:doctor_on_duty/main.dart';
@@ -11,21 +11,14 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 import 'package:doctor_on_duty/domain/models/chapter.dart';
 import 'package:doctor_on_duty/domain/models/topic.dart';
 
-class TopicsPage extends StatefulWidget {
-  @override
-  State<TopicsPage> createState() => _TopicsPageState();
-}
+Chapter? chapter;
 
-class _TopicsPageState extends State<TopicsPage> {
-  late TopicsRepository topicsRepository = watch();
-  late ChaptersRepository chaptersRepository = watch();
+bool loading = false;
 
-  Chapter? chapter;
-
+extension on TopicsPage {
   Iterable<Topic> get topics => topicsRepository.getAll();
   Iterable<Chapter> get chapters => chaptersRepository.getAll();
 
-  bool loading = false;
   Topic? byId(int id) => topicsRepository.get(id);
 
   void chapterSelected(Chapter value) {
@@ -34,7 +27,6 @@ class _TopicsPageState extends State<TopicsPage> {
     } else {
       chapter = value;
     }
-    rebuild();
   }
 
   Iterable<Topic> get filteredTopics {
@@ -64,7 +56,11 @@ class _TopicsPageState extends State<TopicsPage> {
     navigator.to(EditTopicPage());
   }
 
-  void emit(copyWith) {}
+  void emit(_) {}
+}
+
+class TopicsPage extends UI {
+  const TopicsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +90,7 @@ class _TopicsPageState extends State<TopicsPage> {
           ),
           FButton.icon(
             onPress: () {
-              navigator.dialog(AddTopicDialog());
+              navigator.dialog(CreateTopicDialog());
             },
             child: Icon(FIcons.plus),
           ),
@@ -107,14 +103,14 @@ class _TopicsPageState extends State<TopicsPage> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: chapters.map((chapter) {
+                    children: chapters.state.map((chapter) {
                       return FTappable(
                         child: FBadge(
-                          child: chapter.name.text(),
                           style: switch (chapter.id == chapter.id) {
                             true => FBadgeStyle.primary(),
                             _ => FBadgeStyle.secondary(),
                           },
+                          child: chapter.name.text(),
                         ).pad(),
                         onPress: () => chapterSelected(chapter),
                       );

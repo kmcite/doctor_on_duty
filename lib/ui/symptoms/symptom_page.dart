@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 class SymptomPage extends StatelessWidget {
   static const path = '/symptom_page';
 
+  const SymptomPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final symptom = context.routeData.arguments as Symptom;
@@ -25,19 +27,19 @@ class SymptomPage extends StatelessWidget {
         children: [
           CupertinoButton.filled(
             onPressed: () {},
-            child: Text('${symptom.description}'),
+            child: Text(symptom.description),
           ).pad(),
           CupertinoButton.filled(
             onPressed: () {},
-            child: Text('${symptom.investigations}'),
+            child: Text(symptom.investigations),
           ).pad(),
           CupertinoButton.filled(
             onPressed: () {},
-            child: Text('${symptom.examination}'),
+            child: Text(symptom.examination),
           ).pad(),
           CupertinoButton.filled(
             onPressed: () {},
-            child: Text('${symptom.differentials}'),
+            child: Text(symptom.differentials),
           ).pad(),
         ],
       ),

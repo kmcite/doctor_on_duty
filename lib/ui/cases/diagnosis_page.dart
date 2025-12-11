@@ -5,6 +5,8 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 class DiagnosisPage extends StatelessWidget {
   static const path = '/diagnosis_page';
 
+  const DiagnosisPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final diagnosis = context.routeData.arguments as Diagnosis;

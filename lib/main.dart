@@ -1,9 +1,7 @@
-import 'package:doctor_on_duty/domain/api/picker.dart';
-import 'package:doctor_on_duty/domain/api/settings_repository.dart';
+import 'package:doctor_on_duty/domain/reads/settings.dart';
 import 'package:doctor_on_duty/objectbox.g.dart';
 import 'package:doctor_on_duty/ui/hub.dart';
 import 'package:doctor_on_duty/domain/api/navigator.dart';
-import 'package:doctor_on_duty/utils/repositories.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart';
 export 'package:forui/forui.dart';
@@ -11,10 +9,10 @@ export 'package:forui/forui.dart';
 import 'main.dart';
 import 'utils/services.dart';
 
-export 'package:doctor_on_duty/utils/extensions/state.dart';
+export 'package:doctor_on_duty/utils/extensions/ui.dart';
 export 'dart:io';
 export 'package:colornames/colornames.dart';
-export 'package:doctor_on_duty/ui/cases/chapters_page.dart';
+export 'package:doctor_on_duty/ui/cases/chapters.dart';
 export 'package:flutter/material.dart' hide State;
 export 'package:google_fonts/google_fonts.dart';
 export 'package:path_provider/path_provider.dart';
@@ -33,24 +31,12 @@ void main() async {
   );
   service(store);
 
-  repository(SettingsRepository());
-  repository(PickerRepository());
-
-  runApp(
-    App(),
-  );
+  runApp(App());
 }
 
-class App extends StatefulWidget {
+class App extends UI {
   const App({super.key});
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  late SettingsRepository settingsRepository = watch();
-  bool get dark => settingsRepository.dark;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,14 +44,14 @@ class _AppState extends State<App> {
       navigatorKey: navigator.key,
       builder: (context, child) {
         return FTheme(
-          data: switch (dark) {
+          data: switch (darkRead.state) {
             false => FThemes.yellow.light,
             true => FThemes.yellow.dark,
           },
           child: child!,
         );
       },
-      themeMode: dark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: darkRead.state ? ThemeMode.dark : ThemeMode.light,
       themeAnimationDuration: Durations.long2,
       home: Hub(),
     );

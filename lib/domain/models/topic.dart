@@ -1,21 +1,15 @@
+import 'package:doctor_on_duty/objectbox.g.dart';
+
 import '../../main.dart';
 
+@Entity()
 class Topic extends Model {
   int id = 0;
-  String name;
-  String definition;
-  String description;
-  String epidemiology;
+  String name = '';
+  String definition = '';
+  String description = '';
+  String epidemiology = '';
   // Chapter chapter;
-  DateTime createdAt;
-  Topic({
-    this.name = '',
-    this.definition = '',
-    this.description = '',
-    this.epidemiology = '',
-    // Chapter? chapter,
-    DateTime? createdAt,
-  }) : createdAt = createdAt ?? DateTime.now()
-  // chapter = chapter ?? Chapter()
-  ;
+  DateTime createdAt = DateTime.now();
+  int? chapterId;
 }

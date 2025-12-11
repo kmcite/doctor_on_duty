@@ -5,6 +5,8 @@ import 'package:doctor_on_duty/domain/api/navigator.dart';
 class EditDiagnosisPage extends StatelessWidget {
   static const path = '/edit_diagnosis_page';
 
+  const EditDiagnosisPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final diagnosis = context.routeData.arguments as Diagnosis;
@@ -38,7 +40,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'Name'.text(),
             initialText: diagnosis.name,
             onChange: (value) {
-              diagnosis..name = value;
+              diagnosis.name = value;
             },
             maxLength: Diagnosis.nameLength,
           ).pad(),
@@ -46,7 +48,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'Symptoms'.text(),
             initialText: diagnosis.symptoms,
             onChange: (value) {
-              diagnosis..symptoms = value;
+              diagnosis.symptoms = value;
             },
             maxLines: null,
             maxLength: Diagnosis.symptomsLength,
@@ -55,7 +57,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'Examination'.text(),
             initialText: diagnosis.examination,
             onChange: (value) {
-              diagnosis..examination = value;
+              diagnosis.examination = value;
             },
             maxLines: null,
             maxLength: Diagnosis.examinationLength,
@@ -64,7 +66,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'Description'.text(),
             initialText: diagnosis.description,
             onChange: (value) {
-              diagnosis..description = value;
+              diagnosis.description = value;
             },
             maxLines: null,
             maxLength: Diagnosis.descriptionLength,
@@ -73,7 +75,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'Investigations'.text(),
             initialText: diagnosis.investigations,
             onChange: (value) {
-              diagnosis..investigations = value;
+              diagnosis.investigations = value;
             },
             maxLines: null,
             maxLength: Diagnosis.investigationsLength,
@@ -82,7 +84,7 @@ class EditDiagnosisPage extends StatelessWidget {
             label: 'differentials'.text(),
             initialText: diagnosis.differentials,
             onChange: (value) {
-              diagnosis..differentials = value;
+              diagnosis.differentials = value;
             },
             maxLines: null,
             maxLength: Diagnosis.differentialsLength,

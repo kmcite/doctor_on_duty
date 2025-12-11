@@ -4,13 +4,9 @@ import 'package:doctor_on_duty/domain/models/symptom.dart';
 import 'package:doctor_on_duty/main.dart';
 import 'package:doctor_on_duty/ui/search_symptoms.dart';
 
-class SymptomsPage extends StatefulWidget {
-  @override
-  State<SymptomsPage> createState() => _SymptomsPageState();
-}
+class SymptomsPage extends UI {
+  const SymptomsPage({super.key});
 
-class _SymptomsPageState extends State<SymptomsPage> {
-  late SymptomsRepository symptomsRepository = watch();
   void put(Symptom symptom) async {
     symptomsRepository.put(symptom);
   }
@@ -43,23 +39,23 @@ class _SymptomsPageState extends State<SymptomsPage> {
           //     ? CircularProgressIndicator().center()
           //     :
           RefreshIndicator(
-        onRefresh: () async {},
-        child: ListView.builder(
-          itemCount: symptoms.length,
-          itemBuilder: (context, index) {
-            final symptom = symptoms[index];
-            return ListTile(
-              title: symptom.name.toString().text(),
-              onTap: () {
-                // navigator.toNamed(
-                //   SymptomPage.path,
-                //   arguments: symptom,
-                // );
+            onRefresh: () async {},
+            child: ListView.builder(
+              itemCount: symptoms.length,
+              itemBuilder: (context, index) {
+                final symptom = symptoms[index];
+                return ListTile(
+                  title: symptom.name.toString().text(),
+                  onTap: () {
+                    // navigator.toNamed(
+                    //   SymptomPage.path,
+                    //   arguments: symptom,
+                    // );
+                  },
+                );
               },
-            );
-          },
-        ),
-      ),
+            ),
+          ),
       //  FloatingActionButton(
       //   onPressed: () {
       //     navigator.toNamed(
