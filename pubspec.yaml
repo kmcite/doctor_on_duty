@@ -2,37 +2,39 @@ name: doctor_on_duty
 
 description: new app
 publish_to: "none"
-version: 2.0.0+1
+version: 2.0.0+2
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.10.3
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
   path_provider: ^2.1.0  
   uuid: ^4.4.0
-  file_picker: any
+  file_picker: 
   material_design_icons_flutter: any
   font_awesome_flutter: ^10.7.0
   colornames:
-  intl:
   english_words: any
-  google_fonts: ^6.2.1
+  google_fonts: ^8.0.1
   package_info_plus: ^9.0.0
-  flutter_launcher_icons: 
   permission_handler: ^12.0.0+1
-  build_runner:   
-  objectbox: ^5.0.0
-  objectbox_generator: ^5.0.0
-  objectbox_flutter_libs: ^5.0.0
+  objectbox: ^5.1.0
+  objectbox_flutter_libs: ^5.1.0
   states_rebuilder: ^6.4.0
   faker: ^2.2.0
-  # manager:
-  #   path: ..//manager
-  forui: ^0.16.0
+  forui: ^0.18.1
   path: ^1.9.1
+  flutter_native_splash: ^2.4.7
+  yaru: ^9.0.0
+  intl:
+  redux: ^5.0.0
+  flutter_redux: ^0.10.0
 dev_dependencies: 
+  objectbox_generator: ^5.1.0
+  build_runner: ^2.10.4
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: 
 flutter:
   uses-material-design: true
   fonts:
