@@ -6,18 +6,12 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <objectbox_flutter_libs/objectbox_flutter_libs_plugin.h>
-#include <permission_handler_windows/permission_handler_windows_plugin.h>
-#include <screen_retriever_windows/screen_retriever_windows_plugin_c_api.h>
-#include <window_manager/window_manager_plugin.h>
+#include <file_selector_windows/file_selector_windows.h>
+#include <objectbox_flutter_libs/objectbox_flutter_libs_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  ObjectboxFlutterLibsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("ObjectboxFlutterLibsPlugin"));
-  PermissionHandlerWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
-  ScreenRetrieverWindowsPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("ScreenRetrieverWindowsPluginCApi"));
-  WindowManagerPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("WindowManagerPlugin"));
+  FileSelectorWindowsRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FileSelectorWindows"));
+  ObjectboxFlutterLibsPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ObjectboxFlutterLibsPluginCApi"));
 }

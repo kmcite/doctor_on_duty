@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "doctor_on_duty" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "doctor_on_duty" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 dev.loner. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 dev.loner. All rights reserved." "\0"
             VALUE "OriginalFilename", "doctor_on_duty.exe" "\0"
             VALUE "ProductName", "doctor_on_duty" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

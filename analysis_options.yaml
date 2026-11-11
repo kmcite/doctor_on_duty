@@ -28,3 +28,14 @@ linter:
 # https://dart.dev/guides/language/analysis-options
 formatter:
   trailing_commas: preserve
+analyzer:
+  errors:
+    prefer_function_declarations_over_variables: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

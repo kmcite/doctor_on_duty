@@ -14,7 +14,10 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'domain/models/patient_file.dart';
+import 'domain/models/duty.dart';
+import 'domain/models/duty_day_override.dart';
+import 'domain/models/duty_slot.dart';
+import 'domain/models/patient.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -56,131 +59,217 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
     ],
-    relations: <obx_int.ModelRelation>[
-      obx_int.ModelRelation(
-        id: const obx_int.IdUid(1, 5281896147273897634),
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
         name: 'cases',
-        targetId: const obx_int.IdUid(10, 3687989147747334759),
+        srcEntity: 'Patient',
+        srcField: 'duty',
       ),
     ],
-    backlinks: <obx_int.ModelBacklink>[],
   ),
   obx_int.ModelEntity(
-    id: const obx_int.IdUid(10, 3687989147747334759),
-    name: 'MedicalCase',
-    lastPropertyId: const obx_int.IdUid(18, 4813388161748051511),
+    id: const obx_int.IdUid(11, 6578916561180580269),
+    name: 'Patient',
+    lastPropertyId: const obx_int.IdUid(31, 2924055466163194338),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(1, 4688298249592457416),
+        id: const obx_int.IdUid(1, 3365175210316471290),
         name: 'id',
         type: 6,
         flags: 1,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(2, 7152970786897500918),
+        id: const obx_int.IdUid(2, 5518220434794851463),
         name: 'patientName',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 532721769672242641),
+        id: const obx_int.IdUid(3, 2940668165432599468),
         name: 'age',
         type: 6,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(4, 870015072780122949),
+        id: const obx_int.IdUid(4, 8244497213599566075),
         name: 'gender',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(5, 7860025075839209524),
-        name: 'symptoms',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(6, 1763171048634871764),
-        name: 'signs',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(7, 2539133244344757486),
-        name: 'vitals',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(8, 3941707707855226501),
-        name: 'history',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(9, 8846983794120301903),
+        id: const obx_int.IdUid(9, 6509473715764458965),
         name: 'examination',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(10, 4721279422187501326),
-        name: 'provisionalDiagnosis',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(11, 985462169021479702),
-        name: 'finalDiagnosis',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(12, 3345096792146630303),
-        name: 'type',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(13, 334237822972218240),
+        id: const obx_int.IdUid(13, 8087740585329983705),
         name: 'category',
         type: 9,
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(14, 3328538907791402578),
-        name: 'status',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(15, 1382243119126728304),
-        name: 'treatmentPlan',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(16, 4021434563405200145),
-        name: 'progressNotes',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(17, 4400581628436949079),
-        name: 'outcome',
-        type: 9,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
-        id: const obx_int.IdUid(18, 4813388161748051511),
+        id: const obx_int.IdUid(18, 2196628600584730185),
         name: 'dutyId',
         type: 11,
         flags: 520,
-        indexId: const obx_int.IdUid(5, 1616320855457412084),
+        indexId: const obx_int.IdUid(6, 1480700047227866823),
         relationField: 'duty',
         relationTarget: 'Duty',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 5918504405379757962),
+        name: 'arrivedAt',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 5571677055929906728),
+        name: 'complaint',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 1092687557504525983),
+        name: 'duration',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(22, 7483653126779620167),
+        name: 'treatmentRoute',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 6321715420842273034),
+        name: 'medsAdvice',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 4852426452564735405),
+        name: 'disposition',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 2793278777214888588),
+        name: 'legalReference',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 6684168263797170314),
+        name: 'eventDateTime',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 3479789923596774946),
+        name: 'history',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(28, 5340027909343410207),
+        name: 'caseStatus',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(29, 7969770540507826626),
+        name: 'imagePaths',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(30, 8812715087009313762),
+        name: 'categories',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(31, 2924055466163194338),
+        name: 'attachmentPaths',
+        type: 30,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(12, 7189584362350292426),
+    name: 'DutySlot',
+    lastPropertyId: const obx_int.IdUid(6, 3898217582435443268),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 7614755679733703792),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 2041501551837788799),
+        name: 'weekday',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 8388375929194983654),
+        name: 'startMinute',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 469144734976224355),
+        name: 'endMinute',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 8020095042195096477),
+        name: 'label',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 3898217582435443268),
+        name: 'shiftKind',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(13, 7273111105509181086),
+    name: 'DutyDayOverride',
+    lastPropertyId: const obx_int.IdUid(3, 8869737254600833341),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 8834297547330700689),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 8757127986821651586),
+        name: 'date',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 8869737254600833341),
+        name: 'note',
+        type: 9,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -194,11 +283,8 @@ final _entities = <obx_int.ModelEntity>[
 ///
 /// Note: for desktop apps it is recommended to specify a unique [directory].
 ///
-/// See [obx.Store.new] for an explanation of all parameters.
-///
-/// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
-/// the ObjectBox Flutter library to fix loading the native ObjectBox library
-/// on Android 6 and older.
+/// Use [obx.Store.new] directly to use all its options. See its
+/// documentation for an explanation of all parameters.
 Future<obx.Store> openStore({
   String? directory,
   int? maxDBSizeInKB,
@@ -208,7 +294,6 @@ Future<obx.Store> openStore({
   bool queriesCaseSensitiveDefault = true,
   String? macosApplicationGroup,
 }) async {
-  await loadObjectBoxLibraryAndroidCompat();
   return obx.Store(
     getObjectBoxModel(),
     directory: directory ?? (await defaultStoreDirectory()).path,
@@ -231,8 +316,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
     // Typically, this is done with `dart run build_runner build`.
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(10, 3687989147747334759),
-    lastIndexId: const obx_int.IdUid(5, 1616320855457412084),
+    lastEntityId: const obx_int.IdUid(13, 7273111105509181086),
+    lastIndexId: const obx_int.IdUid(6, 1480700047227866823),
     lastRelationId: const obx_int.IdUid(1, 5281896147273897634),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [
@@ -244,8 +329,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
       4383818526270876764,
       6340075273242688143,
       8831134513548188341,
+      3687989147747334759,
     ],
-    retiredIndexUids: const [1391464922779441018, 7958728027913393031],
+    retiredIndexUids: const [
+      1391464922779441018,
+      7958728027913393031,
+      1616320855457412084,
+    ],
     retiredPropertyUids: const [
       6700941335735336355,
       7549490085178677469,
@@ -322,8 +412,37 @@ obx_int.ModelDefinition getObjectBoxModel() {
       123801743114158071,
       3012756044870030679,
       3325261046787806133,
+      4688298249592457416,
+      7152970786897500918,
+      532721769672242641,
+      870015072780122949,
+      7860025075839209524,
+      1763171048634871764,
+      2539133244344757486,
+      3941707707855226501,
+      8846983794120301903,
+      4721279422187501326,
+      985462169021479702,
+      3345096792146630303,
+      334237822972218240,
+      3328538907791402578,
+      1382243119126728304,
+      4021434563405200145,
+      4400581628436949079,
+      4813388161748051511,
+      4340298867267493020,
+      3827204395281815344,
+      4389069952553296201,
+      648889521319018287,
+      3805193234001603130,
+      7770169140445684152,
+      7854858411406442554,
+      883849184084473661,
+      1324302192866268434,
+      2870881483389472857,
+      6028275740410957000,
     ],
-    retiredRelationUids: const [],
+    retiredRelationUids: const [5281896147273897634],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
     version: 1,
@@ -334,7 +453,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
       model: _entities[0],
       toOneRelations: (Duty object) => [],
       toManyRelations: (Duty object) => {
-        obx_int.RelInfo<Duty>.toMany(1, object.id): object.cases,
+        obx_int.RelInfo<Patient>.toOneBacklink(
+          18,
+          object.id,
+          (Patient srcObject) => srcObject.duty,
+        ): object.cases,
       },
       getId: (Duty object) => object.id,
       setId: (Duty object, int id) {
@@ -380,13 +503,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
                 endTime: endTimeParam,
               )
               ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-              ..notes = const fb.StringReader(
-                asciiOptimization: true,
-              ).vTableGet(buffer, rootOffset, 10, '');
+              ..notes = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
         obx_int.InternalToManyAccess.setRelInfo<Duty>(
           object.cases,
           store,
-          obx_int.RelInfo<Duty>.toMany(1, object.id),
+          obx_int.RelInfo<Patient>.toOneBacklink(
+            18,
+            object.id,
+            (Patient srcObject) => srcObject.duty,
+          ),
         );
         return object;
       },
@@ -402,95 +528,98 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectToFB: (Patient object, fb.Builder fbb) {
         final patientNameOffset = fbb.writeString(object.patientName);
         final genderOffset = fbb.writeString(object.gender);
-        final symptomsOffset = fbb.writeString(object.symptoms);
-        final signsOffset = fbb.writeString(object.signs);
-        final vitalsOffset = fbb.writeString(object.vitals);
-        final historyOffset = fbb.writeString(object.history);
         final examinationOffset = fbb.writeString(object.examination);
-        final provisionalDiagnosisOffset = fbb.writeString(
-          object.provisionalDiagnosis,
-        );
-        final finalDiagnosisOffset = fbb.writeString(object.finalDiagnosis);
-        final typeOffset = fbb.writeString(object.type);
         final categoryOffset = fbb.writeString(object.category);
-        final statusOffset = fbb.writeString(object.status);
-        final treatmentPlanOffset = fbb.writeString(object.treatmentPlan);
-        final progressNotesOffset = fbb.writeString(object.progressNotes);
-        final outcomeOffset = fbb.writeString(object.outcome);
-        fbb.startTable(19);
+        final complaintOffset = fbb.writeString(object.complaint);
+        final durationOffset = fbb.writeString(object.duration);
+        final treatmentRouteOffset = fbb.writeString(object.treatmentRoute);
+        final medsAdviceOffset = fbb.writeString(object.medsAdvice);
+        final dispositionOffset = fbb.writeString(object.disposition);
+        final legalReferenceOffset = fbb.writeString(object.legalReference);
+        final historyOffset = fbb.writeString(object.history);
+        final caseStatusOffset = fbb.writeString(object.caseStatus);
+        final imagePathsOffset = fbb.writeString(object.imagePaths);
+        final categoriesOffset = fbb.writeList(
+          object.categories.map(fbb.writeString).toList(growable: false),
+        );
+        final attachmentPathsOffset = fbb.writeList(
+          object.attachmentPaths.map(fbb.writeString).toList(growable: false),
+        );
+        fbb.startTable(32);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, patientNameOffset);
         fbb.addInt64(2, object.age);
         fbb.addOffset(3, genderOffset);
-        fbb.addOffset(4, symptomsOffset);
-        fbb.addOffset(5, signsOffset);
-        fbb.addOffset(6, vitalsOffset);
-        fbb.addOffset(7, historyOffset);
         fbb.addOffset(8, examinationOffset);
-        fbb.addOffset(9, provisionalDiagnosisOffset);
-        fbb.addOffset(10, finalDiagnosisOffset);
-        fbb.addOffset(11, typeOffset);
         fbb.addOffset(12, categoryOffset);
-        fbb.addOffset(13, statusOffset);
-        fbb.addOffset(14, treatmentPlanOffset);
-        fbb.addOffset(15, progressNotesOffset);
-        fbb.addOffset(16, outcomeOffset);
         fbb.addInt64(17, object.duty.targetId);
+        fbb.addInt64(18, object.arrivedAt.millisecondsSinceEpoch);
+        fbb.addOffset(19, complaintOffset);
+        fbb.addOffset(20, durationOffset);
+        fbb.addOffset(21, treatmentRouteOffset);
+        fbb.addOffset(22, medsAdviceOffset);
+        fbb.addOffset(23, dispositionOffset);
+        fbb.addOffset(24, legalReferenceOffset);
+        fbb.addInt64(25, object.eventDateTime?.millisecondsSinceEpoch);
+        fbb.addOffset(26, historyOffset);
+        fbb.addOffset(27, caseStatusOffset);
+        fbb.addOffset(28, imagePathsOffset);
+        fbb.addOffset(29, categoriesOffset);
+        fbb.addOffset(30, attachmentPathsOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
-
+        final eventDateTimeValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          54,
+        );
         final object = Patient()
           ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-          ..patientName = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 6, '')
+          ..patientName = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '')
           ..age = const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)
-          ..gender = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 10, '')
-          ..symptoms = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 12, '')
-          ..signs = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 14, '')
-          ..vitals = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 16, '')
-          ..history = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 18, '')
-          ..examination = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 20, '')
-          ..provisionalDiagnosis = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 22, '')
-          ..finalDiagnosis = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 24, '')
-          ..type = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 26, '')
-          ..category = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 28, '')
-          ..status = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 30, '')
-          ..treatmentPlan = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 32, '')
-          ..progressNotes = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 34, '')
-          ..outcome = const fb.StringReader(
-            asciiOptimization: true,
-          ).vTableGet(buffer, rootOffset, 36, '');
+          ..gender = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '')
+          ..examination = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 20, '')
+          ..category = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 28, '')
+          ..arrivedAt = DateTime.fromMillisecondsSinceEpoch(
+            const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0),
+          )
+          ..complaint = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 42, '')
+          ..duration = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 44, '')
+          ..treatmentRoute = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 46, '')
+          ..medsAdvice = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 48, '')
+          ..disposition = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 50, '')
+          ..legalReference = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 52, '')
+          ..eventDateTime = eventDateTimeValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(eventDateTimeValue)
+          ..history = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 56, '')
+          ..caseStatus = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 58, '')
+          ..imagePaths = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 60, '')
+          ..categories = const fb.ListReader<String>(
+            fb.StringReader(asciiOptimization: true),
+            lazy: false,
+          ).vTableGet(buffer, rootOffset, 62, [])
+          ..attachmentPaths = const fb.ListReader<String>(
+            fb.StringReader(asciiOptimization: true),
+            lazy: false,
+          ).vTableGet(buffer, rootOffset, 64, []);
         object.duty.targetId = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -498,6 +627,94 @@ obx_int.ModelDefinition getObjectBoxModel() {
           0,
         );
         object.duty.attach(store);
+        return object;
+      },
+    ),
+    DutySlot: obx_int.EntityDefinition<DutySlot>(
+      model: _entities[2],
+      toOneRelations: (DutySlot object) => [],
+      toManyRelations: (DutySlot object) => {},
+      getId: (DutySlot object) => object.id,
+      setId: (DutySlot object, int id) {
+        object.id = id;
+      },
+      objectToFB: (DutySlot object, fb.Builder fbb) {
+        final labelOffset = fbb.writeString(object.label);
+        final shiftKindOffset = fbb.writeString(object.shiftKind);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.weekday);
+        fbb.addInt64(2, object.startMinute);
+        fbb.addInt64(3, object.endMinute);
+        fbb.addOffset(4, labelOffset);
+        fbb.addOffset(5, shiftKindOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final weekdayParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final startMinuteParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final endMinuteParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final labelParam = const fb.StringReader(asciiOptimization: true)
+            .vTableGet(buffer, rootOffset, 12, '');
+        final shiftKindParam = const fb.StringReader(asciiOptimization: true)
+            .vTableGet(buffer, rootOffset, 14, '');
+        final object = DutySlot(
+          weekday: weekdayParam,
+          startMinute: startMinuteParam,
+          endMinute: endMinuteParam,
+          label: labelParam,
+          shiftKind: shiftKindParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+        return object;
+      },
+    ),
+    DutyDayOverride: obx_int.EntityDefinition<DutyDayOverride>(
+      model: _entities[3],
+      toOneRelations: (DutyDayOverride object) => [],
+      toManyRelations: (DutyDayOverride object) => {},
+      getId: (DutyDayOverride object) => object.id,
+      setId: (DutyDayOverride object, int id) {
+        object.id = id;
+      },
+      objectToFB: (DutyDayOverride object, fb.Builder fbb) {
+        final noteOffset = fbb.writeString(object.note);
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.date.millisecondsSinceEpoch);
+        fbb.addOffset(2, noteOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final dateParam = DateTime.fromMillisecondsSinceEpoch(
+          const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+        );
+        final noteParam = const fb.StringReader(asciiOptimization: true)
+            .vTableGet(buffer, rootOffset, 8, '');
+        final object = DutyDayOverride(date: dateParam, note: noteParam)
+          ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
         return object;
       },
     ),
@@ -530,13 +747,11 @@ class Duty_ {
   );
 
   /// see [Duty.cases]
-  static final cases = obx.QueryRelationToMany<Duty, Patient>(
-    _entities[0].relations[0],
-  );
+  static final cases = obx.QueryBacklinkToMany<Patient, Duty>(Patient_.duty);
 }
 
 /// [Patient] entity fields to define ObjectBox queries.
-class MedicalCase_ {
+class Patient_ {
   /// See [Patient.id].
   static final id = obx.QueryIntegerProperty<Patient>(
     _entities[1].properties[0],
@@ -557,73 +772,134 @@ class MedicalCase_ {
     _entities[1].properties[3],
   );
 
-  /// See [Patient.symptoms].
-  static final symptoms = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[4],
-  );
-
-  /// See [Patient.signs].
-  static final signs = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[5],
-  );
-
-  /// See [Patient.vitals].
-  static final vitals = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[6],
-  );
-
-  /// See [Patient.history].
-  static final history = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[7],
-  );
-
   /// See [Patient.examination].
   static final examination = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[8],
-  );
-
-  /// See [Patient.provisionalDiagnosis].
-  static final provisionalDiagnosis = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[9],
-  );
-
-  /// See [Patient.finalDiagnosis].
-  static final finalDiagnosis = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[10],
-  );
-
-  /// See [Patient.type].
-  static final type = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[11],
+    _entities[1].properties[4],
   );
 
   /// See [Patient.category].
   static final category = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[12],
-  );
-
-  /// See [Patient.status].
-  static final status = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[13],
-  );
-
-  /// See [Patient.treatmentPlan].
-  static final treatmentPlan = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[14],
-  );
-
-  /// See [Patient.progressNotes].
-  static final progressNotes = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[15],
-  );
-
-  /// See [Patient.outcome].
-  static final outcome = obx.QueryStringProperty<Patient>(
-    _entities[1].properties[16],
+    _entities[1].properties[5],
   );
 
   /// See [Patient.duty].
   static final duty = obx.QueryRelationToOne<Patient, Duty>(
+    _entities[1].properties[6],
+  );
+
+  /// See [Patient.arrivedAt].
+  static final arrivedAt = obx.QueryDateProperty<Patient>(
+    _entities[1].properties[7],
+  );
+
+  /// See [Patient.complaint].
+  static final complaint = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[8],
+  );
+
+  /// See [Patient.duration].
+  static final duration = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[9],
+  );
+
+  /// See [Patient.treatmentRoute].
+  static final treatmentRoute = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[10],
+  );
+
+  /// See [Patient.medsAdvice].
+  static final medsAdvice = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[11],
+  );
+
+  /// See [Patient.disposition].
+  static final disposition = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[12],
+  );
+
+  /// See [Patient.legalReference].
+  static final legalReference = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[13],
+  );
+
+  /// See [Patient.eventDateTime].
+  static final eventDateTime = obx.QueryDateProperty<Patient>(
+    _entities[1].properties[14],
+  );
+
+  /// See [Patient.history].
+  static final history = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[15],
+  );
+
+  /// See [Patient.caseStatus].
+  static final caseStatus = obx.QueryStringProperty<Patient>(
+    _entities[1].properties[16],
+  );
+
+  /// See [Patient.imagePaths].
+  static final imagePaths = obx.QueryStringProperty<Patient>(
     _entities[1].properties[17],
+  );
+
+  /// See [Patient.categories].
+  static final categories = obx.QueryStringVectorProperty<Patient>(
+    _entities[1].properties[18],
+  );
+
+  /// See [Patient.attachmentPaths].
+  static final attachmentPaths = obx.QueryStringVectorProperty<Patient>(
+    _entities[1].properties[19],
+  );
+}
+
+/// [DutySlot] entity fields to define ObjectBox queries.
+class DutySlot_ {
+  /// See [DutySlot.id].
+  static final id = obx.QueryIntegerProperty<DutySlot>(
+    _entities[2].properties[0],
+  );
+
+  /// See [DutySlot.weekday].
+  static final weekday = obx.QueryIntegerProperty<DutySlot>(
+    _entities[2].properties[1],
+  );
+
+  /// See [DutySlot.startMinute].
+  static final startMinute = obx.QueryIntegerProperty<DutySlot>(
+    _entities[2].properties[2],
+  );
+
+  /// See [DutySlot.endMinute].
+  static final endMinute = obx.QueryIntegerProperty<DutySlot>(
+    _entities[2].properties[3],
+  );
+
+  /// See [DutySlot.label].
+  static final label = obx.QueryStringProperty<DutySlot>(
+    _entities[2].properties[4],
+  );
+
+  /// See [DutySlot.shiftKind].
+  static final shiftKind = obx.QueryStringProperty<DutySlot>(
+    _entities[2].properties[5],
+  );
+}
+
+/// [DutyDayOverride] entity fields to define ObjectBox queries.
+class DutyDayOverride_ {
+  /// See [DutyDayOverride.id].
+  static final id = obx.QueryIntegerProperty<DutyDayOverride>(
+    _entities[3].properties[0],
+  );
+
+  /// See [DutyDayOverride.date].
+  static final date = obx.QueryDateProperty<DutyDayOverride>(
+    _entities[3].properties[1],
+  );
+
+  /// See [DutyDayOverride.note].
+  static final note = obx.QueryStringProperty<DutyDayOverride>(
+    _entities[3].properties[2],
   );
 }

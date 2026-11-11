@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="128" y1="64" x2="896" y2="960" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#070B12"/>
+      <stop offset="0.55" stop-color="#0C1524"/>
+      <stop offset="1" stop-color="#0D9488"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="200" y1="120" x2="760" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- App canvas -->
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <rect width="1024" height="1024" rx="224" fill="url(#sheen)"/>
+  <rect x="48" y="48" width="928" height="928" rx="196" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="4"/>
+
+  <!-- Duotone layer (secondary / mint, soft) -->
+  <g fill="#2DD4BF" fill-opacity="0.42">
+    <!-- Stethoscope bell -->
+    <circle cx="512" cy="620" r="118"/>
+  </g>
+  <g stroke="#2DD4BF" stroke-opacity="0.5" stroke-width="44" stroke-linecap="round" fill="none">
+    <path d="M512 502 V378"/>
+    <path d="M512 378 C512 280 628 248 712 312 C796 376 756 502 640 538"/>
+  </g>
+
+  <!-- Primary layer (cross + tube) -->
+  <g fill="#FFFFFF">
+    <rect x="472" y="268" width="80" height="200" rx="28"/>
+    <rect x="412" y="328" width="200" height="80" rx="28"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-width="40" stroke-linecap="round" fill="none">
+    <path d="M512 502 V598"/>
+    <circle cx="512" cy="652" r="52" fill="#0D9488" stroke="#FFFFFF" stroke-width="28"/>
+  </g>
+  <circle cx="512" cy="652" r="88" fill="none" stroke="#2DD4BF" stroke-opacity="0.55" stroke-width="16"/>
+
+  <!-- Accent dot (on-duty pulse) -->
+  <circle cx="748" cy="276" r="36" fill="#2DD4BF"/>
+</svg>

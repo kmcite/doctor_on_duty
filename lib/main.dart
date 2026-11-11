@@ -1,52 +1,66 @@
-import 'package:doctor_on_duty/domain/navigation.dart';
-import 'package:doctor_on_duty/domain/object_box_store.dart';
-import 'package:doctor_on_duty/domain/store.dart';
-import 'package:doctor_on_duty/ui/hub/hub.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:forui/forui.dart';
-
-import 'main.dart';
-import 'ui/ui.dart';
+import 'package:doctor_on_duty/app/app_router.dart';
+import 'package:doctor_on_duty/business/dark.dart';
+import 'package:doctor_on_duty/business/duties.dart';
+import 'package:doctor_on_duty/business/patients.dart';
+import 'package:doctor_on_duty/domain/repositories/duties.dart';
+import 'package:doctor_on_duty/domain/repositories/patients_repository.dart';
+import 'package:doctor_on_duty/domain/services/store_service.dart';
+import 'package:doctor_on_duty/ui/theme/app_theme.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 export 'dart:io';
-export 'package:colornames/colornames.dart';
-export 'package:flutter/material.dart' hide State;
-export 'package:google_fonts/google_fonts.dart';
+export 'package:flutter/material.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:states_rebuilder/states_rebuilder.dart';
-export 'package:doctor_on_duty/utils/model.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final isDark = await ThemeController.readPersistedDark();
+  final storeService = StoreService();
+  await storeService.init();
+  final dutiesRepository = DutiesRepository(storeService);
+  final patientsRepository = PatientsRepository(storeService);
+
   runApp(
-    StoreProvider(store: store, child: App()),
+    MultiProvider(
+      providers: [
+        Provider.value(value: storeService),
+        ChangeNotifierProvider.value(value: dutiesRepository),
+        ChangeNotifierProvider.value(value: patientsRepository),
+        ChangeNotifierProvider(
+          create: (context) => DutiesController(
+            context.read<DutiesRepository>(),
+            context.read<PatientsRepository>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PatientsController(
+            context.read<PatientsRepository>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ThemeController(initialDark: isDark),
+        ),
+      ],
+      child: const DoctorOnDutyApp(),
+    ),
   );
 }
 
-class App extends UI {
-  const App({super.key});
-
-  @override
-  void init() {
-    apply(StoreIsLoading());
-  }
+class DoctorOnDutyApp extends StatelessWidget {
+  const DoctorOnDutyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.watch<ThemeController>();
     return MaterialApp(
+      title: 'Doctor on Duty',
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigator,
-      theme: FThemes.green.light.toApproximateMaterialTheme(),
-      darkTheme: FThemes.red.dark.toApproximateMaterialTheme(),
-      builder: (context, child) => FTheme(
-        data: state.dark ? FThemes.red.dark : FThemes.green.light,
-        child: child!,
-      ),
-      themeMode: state.dark ? .dark : .light,
-      themeAnimationDuration: Durations.long2,
-      home: state.isStoreWaiting
-          ? Center(child: FCircularProgress.loader())
-          : Hub(),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: theme.isDark ? ThemeMode.dark : ThemeMode.light,
+      initialRoute: AppRoutes.hub,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
